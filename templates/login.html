@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Sistema Escolar</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #eef2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+    .login-card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 350px; }
+    h2 { text-align: center; color: #333; }
+    label { display: block; margin-top: 12px; font-weight: bold; }
+    input { width: 100%; padding: 10px; margin-top: 5px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+    button { margin-top: 20px; width: 100%; padding: 10px; background-color: #0066cc; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; }
+    button:hover { background-color: #0055b3; }
+    .error { color: red; text-align: center; margin-top: 10px; font-size: 14px; }
+    .regreso { display: block; text-align: center; margin-top: 15px; color: #666; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <h2>Iniciar Sesión</h2>
+    <form method="POST" action="/login">
+      <label>Usuario (ID / Matrícula / admin):</label>
+      <input type="text" name="usuario" required>
+
+      <label>Contraseña:</label>
+      <input type="password" name="password" required>
+
+      <button type="submit">Entrar</button>
+      {% if error %}
+        <div class="error">{{ error }}</div>
+      {% endif %}
+    </form>
+    <a href="/" class="regreso">Registrar nuevo alumno</a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel de Administrador</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f6f9; padding: 20px; }
+    .container { max-width: 1000px; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin: auto; }
+    h1 { color: #333; }
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+    th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+    th { background-color: #2c3e50; color: white; }
+    .logout { float: right; background: #c0392b; color: white; padding: 8px 15px; text-decoration: none; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/logout" class="logout">Cerrar Sesión</a>
+    <h1>Panel de Administración (USERS_DB & INSCRIPTIONS_DB)</h1>
+
+    <h3>Alumnos Registrados</h3>
+    <table>
+      <tr>
+        <th>Matrícula</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Carrera</th>
+        <th>Talleres</th>
+      </tr>
+      {% for a in alumnos %}
+      <tr>
+        <td>{{ a._id }}</td>
+        <td>{{ a.nombre }}</td>
+        <td>{{ a.apellido }}</td>
+        <td>{{ a.carrera }}</td>
+        <td>{{ a.talleres_activos | join(', ') }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <h3 style="margin-top: 30px;">Historial de Inscripciones</h3>
+    <table>
+      <tr>
+        <th>ID Alumno</th>
+        <th>Taller</th>
+        <th>Fecha</th>
+        <th>Estado</th>
+      </tr>
+      {% for r in registros %}
+      <tr>
+        <td>{{ r.id_alumno }}</td>
+        <td>{{ r.taller }}</td>
+        <td>{{ r.fecha_inscripcion }}</td>
+        <td>{{ r.estado }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</body>
+</html>

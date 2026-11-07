@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Alumnos - Sistema NoSQL</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; display: flex; justify-content: center; padding: 40px; }
+    .card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+    h2 { margin-top: 0; color: #13aa52; }
+    label { display: block; margin-top: 10px; font-weight: bold; }
+    input { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+    button { margin-top: 20px; width: 100%; padding: 10px; background-color: #13aa52; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; }
+    button:hover { background-color: #118d44; }
+    .link-login { display: block; margin-top: 15px; text-align: center; color: #0066cc; text-decoration: none; }
+    .msg { margin-top: 15px; text-align: center; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>Registro de Alumno</h2>
+    <form id="registroForm">
+      <label>Matrícula / ID de Usuario:</label>
+      <input type="text" id="id_alumno" required placeholder="Ej: 2020601879">
+
+      <label>Contraseña:</label>
+      <input type="password" id="password" required placeholder="Crea una contraseña">
+
+      <label>Nombre:</label>
+      <input type="text" id="nombre" required placeholder="Ej: Gustavo">
+
+      <label>Apellido:</label>
+      <input type="text" id="apellido" required placeholder="Ej: Ambriz">
+
+      <label>Carrera:</label>
+      <input type="text" id="carrera" required placeholder="Ej: Ciencias de la Informática">
+
+      <label>Taller:</label>
+      <input type="text" id="taller" required placeholder="Ej: Danza folklorica">
+
+      <button type="submit">Registrarse</button>
+    </form>
+    <a href="/login" class="link-login">¿Ya tienes cuenta? Inicia sesión aquí</a>
+    <div id="mensaje" class="msg"></div>
+  </div>
+
+  <script>
+    document.getElementById('registroForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const payload = {
+        id_alumno: document.getElementById('id_alumno').value,
+        password: document.getElementById('password').value,
+        nombre: document.getElementById('nombre').value,
+        apellido: document.getElementById('apellido').value,
+        carrera: document.getElementById('carrera').value,
+        taller: document.getElementById('taller').value
+      };
+
+      const res = await fetch('/api/registrar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+      const msgDiv = document.getElementById('mensaje');
+      
+      if (res.ok) {
+        msgDiv.style.color = 'green';
+        msgDiv.innerText = '¡Registrado con éxito! Redirigiendo...';
+        setTimeout(() => window.location.href = '/login', 1500);
+      } else {
+        msgDiv.style.color = 'red';
+        msgDiv.innerText = 'Error: ' + data.message;
+      }
+    });
+  </script>
+</body>
+</html>
